@@ -130,8 +130,10 @@ export default function HeroSection() {
                   {/* Video glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 via-orange-400/10 to-orange-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 </div>
-                {/* Enhanced glow */}
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 via-orange-400/12 to-orange-600/20 blur-xl -z-10 scale-110 group-hover:scale-115 transition-transform duration-700" />
+                {/* Enhanced glow - balanced intensity */}
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/25 via-orange-400/20 to-orange-600/25 blur-xl -z-10 scale-105 group-hover:scale-110 transition-transform duration-700" />
+                {/* Additional glow layer for subtle depth */}
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-400/12 via-orange-500/8 to-orange-600/12 blur-2xl -z-20 scale-115 animate-pulse" />
                 {/* Corner accents */}
                 <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-orange-400/60" />
                 <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-orange-400/60" />
@@ -214,8 +216,11 @@ export default function HeroSection() {
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 via-orange-400/10 to-orange-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 </div> 
                 
-                {/* Enhanced glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/25 via-orange-400/16 to-orange-600/25 blur-2xl -z-10 scale-110 group-hover:scale-115 transition-transform duration-700" />
+                {/* Enhanced glow effect - balanced intensity */}
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/30 via-orange-400/25 to-orange-600/30 blur-2xl -z-10 scale-110 group-hover:scale-120 transition-transform duration-700" />
+                
+                {/* Additional glow layer for subtle depth */}
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-400/15 via-orange-500/12 to-orange-600/15 blur-3xl -z-20 scale-125 animate-pulse" />
                 
                 {/* Corner frame accents */}
                 <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-orange-400/70 transform group-hover:scale-110 transition-transform duration-500" />
