@@ -32,7 +32,7 @@ export default function Navbar() {
     <>
       <nav className={`absolute top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'bg-slate-950/90 backdrop-blur-lg border-b border-slate-800/50 shadow-lg shadow-orange-500/5' 
+          ? 'bg-slate-950/90 backdrop-blur-lg shadow-lg shadow-orange-500/5' 
           : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,7 +48,7 @@ export default function Navbar() {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
               >
-                <span className="relative">
+                <span className="relative bottom-0.5">
                   Amrit Dubey
                   <div className="absolute -inset-2 bg-gradient-to-r from-orange-500/0 via-orange-400/20 to-orange-500/0 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300" />
                 </span>
