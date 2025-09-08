@@ -92,7 +92,7 @@ export function ProjectCarousel({ id }:{ id: string }) {
                   <div className="relative w-full h-full overflow-hidden">
                     <Image 
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover"
                       src={val}
                       alt='project-screenshot'
                     />

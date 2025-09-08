@@ -117,7 +117,7 @@ export const projects: Project[] = [
     tags: [ "Python", "Keras", "TensorFlow" ],
     category: "aiml",
     github: "https://github.com/amritdubey1600/Churn-Modelling",
-    webapp: "https://colab.research.google.com/drive/1uIIjLTGqScoN7OWQgUGVJbDDPI_OiRKK?usp=sharing",
+    webapp: "",
     highlights: [
       ["Deep Learning", "Built ANN model for churn prediction."],
       ["Model Training", "Trained with TensorFlow & Keras on Kaggle dataset."],
@@ -133,7 +133,7 @@ export const projects: Project[] = [
     tags: [ "Python", "Random Forest Classifier", "Scikit Learn" ],
     category: "aiml",
     github: "https://github.com/amritdubey1600/LoanRiskAnalyzer",
-    webapp: "https://github.com/amritdubey1600/LoanRiskAnalyzer/blob/main/LoanRiskAnalyzer.ipynb",
+    webapp: "",
     highlights: [
       ["Machine Learning", "Used Random Forest for loan risk classification."],
       ["Feature Engineering", "Extracted key borrower attributes for prediction."],

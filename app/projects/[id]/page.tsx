@@ -14,7 +14,7 @@ export default function ProjectsPage() {
 
   const router = useRouter();
 
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: 300, y: 300 });
   const [particles, setParticles] = useState<
     Array<{ left: number; top: number; duration: number; delay: number }>
   >([]);
@@ -24,10 +24,21 @@ export default function ProjectsPage() {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight,
-      });
+      // Get the main container element to calculate relative position
+      const mainContainer = document.querySelector('.projects-main-container');
+      if (mainContainer) {
+        const rect = mainContainer.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // Only update position if mouse is within the container bounds
+        if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+          setMousePosition({
+            x: x,
+            y: y
+          });
+        }
+      }
     };
 
     const generatedParticles = Array.from({ length: 12 }, () => ({
@@ -51,7 +62,7 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="min-h-fit bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+    <div className="projects-main-container min-h-fit bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
       {/* Enhanced Dynamic Background */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating particles */}
@@ -70,14 +81,14 @@ export default function ProjectsPage() {
           ))}
         </div>
         
-        {/* Interactive gradient orb */}
+        {/* Fixed Interactive gradient orb */}
         <div 
-          className="absolute w-[600px] h-[600px] opacity-15 blur-3xl transition-all duration-1000 ease-out"
+          className="absolute w-[600px] h-[600px] opacity-15 blur-3xl transition-all duration-300 ease-out pointer-events-none"
           style={{
             background: 'radial-gradient(circle, rgba(251, 146, 60, 0.6) 0%, rgba(249, 115, 22, 0.3) 35%, rgba(234, 88, 12, 0.1) 70%, transparent 100%)',
-            left: `${mousePosition.x * 100}%`,
-            top: `${mousePosition.y * 100}%`,
-            transform: 'translate(-50%, -50%)'
+            left: `${mousePosition.x}px`,
+            top: `${mousePosition.y}px`,
+            transform: 'translate(-300px, -300px)' // Center the 600px orb
           }}
         />
         
@@ -266,14 +277,16 @@ export default function ProjectsPage() {
 
               {/* Action Buttons */}
               <div className="flex flex-wrap gap-4 lg:flex-shrink-0">
-                <button
-                  onClick={() => window.open(project?.webapp, '_blank')}
-                  className="group relative inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-medium transition-all duration-300 hover:scale-105 glow-orange overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-400/0 via-white/20 to-orange-400/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                  <ExternalLink className="w-5 h-5 relative z-10" />
-                  <span className="relative z-10">Live Demo</span>
-                </button>
+                {project.webapp && 
+                  <button
+                    onClick={() => window.open(project?.webapp, '_blank')}
+                    className="group relative inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-medium transition-all duration-300 hover:scale-105 glow-orange overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-400/0 via-white/20 to-orange-400/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                    <ExternalLink className="w-5 h-5 relative z-10" />
+                    <span className="relative z-10">Live Demo</span>
+                  </button>
+                }
                 
                 <button
                   onClick={() => window.open(project?.github, '_blank')}
@@ -298,7 +311,7 @@ export default function ProjectsPage() {
                 {project?.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="px-3 py-1 text-sm bg-slate-800/40 border border-slate-700/50 text-slate-300 hover:border-orange-400/50 hover:text-orange-400 transition-all duration-300 cursor-default"
+                    className="px-3 py-1 hover:cursor-text text-sm bg-slate-800/40 border border-slate-700/50 text-slate-300 hover:border-orange-400/50 hover:text-orange-400 transition-all duration-300 cursor-default"
                   >
                     {tag}
                   </span>

@@ -284,7 +284,7 @@ const ExperiencesSection: React.FC = () => {
                             {experience.skills.map((skill, skillIndex) => (
                               <span 
                                 key={skillIndex}
-                                className="group/skill relative px-4 py-2.5 bg-gradient-to-r from-slate-800/60 via-slate-800/40 to-slate-800/60 border border-slate-600/40 text-slate-200 text-sm font-medium hover:border-orange-400/60 hover:text-white hover:from-slate-700/60 hover:via-slate-700/40 hover:to-slate-700/60 transition-all duration-300 cursor-default backdrop-blur-sm overflow-hidden skill-shimmer"
+                                className="group/skill hover:cursor-text relative px-4 py-2.5 bg-gradient-to-r from-slate-800/60 via-slate-800/40 to-slate-800/60 border border-slate-600/40 text-slate-200 text-sm font-medium hover:border-orange-400/60 hover:text-white hover:from-slate-700/60 hover:via-slate-700/40 hover:to-slate-700/60 transition-all duration-300 cursor-default backdrop-blur-sm overflow-hidden skill-shimmer"
                               >
                                 {/* Skill badge glow effect */}
                                 <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-orange-400/15 to-orange-600/10 opacity-0 group-hover/skill:opacity-100 transition-opacity duration-300" />

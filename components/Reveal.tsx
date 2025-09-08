@@ -9,7 +9,7 @@ interface RevealProps {
 
 export default function Reveal({ children }: RevealProps) {
   const { ref, isIntersecting } = useIntersectionObserver<HTMLDivElement>({
-    threshold: 0.2, // 20% visible
+    threshold: 0.18, // 18% visible
   });
 
   return (

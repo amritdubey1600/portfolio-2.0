@@ -6,7 +6,7 @@ import RevealSideways from '@/components/RevealSideways';
 import Reveal from '@/components/Reveal';
 
 export default function HeroSection() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: 250, y: 250 });
   const [particles, setParticles] = useState<
     Array<{ left: number; top: number; duration: number; delay: number }>
   >([]);
@@ -17,10 +17,18 @@ export default function HeroSection() {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight,
-      });
+      // Get the hero section element to calculate relative position
+      const heroSection = document.getElementById('hero');
+      if (heroSection) {
+        const rect = heroSection.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        setMousePosition({
+          x: Math.max(0, Math.min(rect.width, x)),
+          y: Math.max(0, Math.min(rect.height, y))
+        });
+      }
     };
 
     const generatedParticles = Array.from({ length: 15 }, () => ({
@@ -69,14 +77,14 @@ export default function HeroSection() {
           ))}
         </div>
         
-        {/* Interactive gradient orb that follows mouse */}
+        {/* Fixed Interactive gradient orb that follows mouse */}
         <div 
-          className="absolute w-[500px] h-[500px] opacity-20 rounded-full blur-3xl transition-all duration-700 ease-out"
+          className="absolute w-[500px] h-[500px] opacity-20 rounded-full blur-3xl transition-all duration-300 ease-out pointer-events-none"
           style={{
             background: 'radial-gradient(circle, rgba(251, 146, 60, 0.5) 0%, rgba(249, 115, 22, 0.25) 30%, rgba(234, 88, 12, 0.08) 60%, transparent 100%)',
-            left: `${mousePosition.x * 100}%`,
-            top: `${mousePosition.y * 100}%`,
-            transform: 'translate(-50%, -50%)'
+            left: `${mousePosition.x}px`,
+            top: `${mousePosition.y}px`,
+            transform: 'translate(-250px, -250px)' // Center the 500px orb
           }}
         />
         

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Calendar } from 'lucide-react';
+import { Calendar, Loader2 } from 'lucide-react';
 import { projects, Project } from '@/data/ProjectsData';
 import Reveal from '@/components/Reveal';
 import { useRouter } from 'next/navigation';
@@ -21,13 +21,25 @@ const categories: Category[] = [
 export default function ProjectsSection() {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [loadingProject, setLoadingProject] = useState<string | null>(null);
 
   const filteredProjects = selectedCategory === 'all' 
     ? projects 
     : projects.filter((project: Project) => project.category === selectedCategory);
 
-  const handleProjectClick = (project: Project): void => {
-    router.push(`/projects/${project.id}`);
+  const handleProjectClick = async (project: Project): Promise<void> => {
+    // Set loading state immediately
+    setLoadingProject(project.id);
+    
+    // Add a small delay to show the loading state (optional)
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    try {
+      router.push(`/projects/${project.id}`);
+    } catch (error) {
+      console.error('Navigation error:', error);
+      setLoadingProject(null); // Reset loading state on error
+    }
   };
 
   return (
@@ -149,15 +161,23 @@ export default function ProjectsSection() {
             <div className="absolute m-2 md:m-0 -bottom-4 -left-4 w-8 h-8 border-b-2 border-l-2 border-orange-400/60" />
             <div className="absolute m-2 md:m-0 -bottom-4 -right-4 w-8 h-8 border-b-2 border-r-2 border-orange-400/60" />
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProjects.map((project: Project) => (
                 <Reveal key={project.id}>
                   <div
                     onClick={() => handleProjectClick(project)}
-                    className="group relative bg-slate-800/40 backdrop-blur-sm border border-slate-600/30 hover:border-orange-400/50 transition-all duration-500 cursor-pointer transform hover:scale-[1.02] hover:shadow-xl hover:shadow-orange-500/20 overflow-hidden h-full flex flex-col"
+                    className={`group relative bg-slate-800/40 backdrop-blur-sm border transition-all duration-500 cursor-pointer transform hover:scale-[1.02] hover:shadow-xl overflow-hidden h-full flex flex-col ${
+                      loadingProject === project.id
+                        ? 'border-orange-400/70 shadow-orange-500/30 scale-[1.02] pointer-events-none'
+                        : 'border-slate-600/30 hover:border-orange-400/50 hover:shadow-orange-500/20'
+                    }`}
                   >
-                    {/* Enhanced glow on hover */}
-                    <div className="absolute -inset-px bg-gradient-to-r from-orange-500/0 via-orange-400/0 to-orange-600/0 group-hover:from-orange-500/20 group-hover:via-orange-400/30 group-hover:to-orange-600/20 blur-sm transition-all duration-500 -z-10" />
+                    {/* Enhanced glow on hover and loading */}
+                    <div className={`absolute -inset-px bg-gradient-to-r blur-sm transition-all duration-500 -z-10 ${
+                      loadingProject === project.id
+                        ? 'from-orange-500/40 via-orange-400/50 to-orange-600/40'
+                        : 'from-orange-500/0 via-orange-400/0 to-orange-600/0 group-hover:from-orange-500/20 group-hover:via-orange-400/30 group-hover:to-orange-600/20'
+                    }`} />
                     
                     {/* Project Image */}
                     <div className="relative h-48 lg:h-56 overflow-hidden flex-shrink-0">
@@ -166,7 +186,9 @@ export default function ProjectsSection() {
                           src={project.image}
                           alt={project.title}
                           fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          className={`object-cover transition-transform duration-500 ${
+                            loadingProject === project.id ? 'scale-105' : 'group-hover:scale-105'
+                          }`}
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                       ) : (
@@ -175,8 +197,10 @@ export default function ProjectsSection() {
                         </div>
                       )}
                       
-                      {/* Overlay on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      {/* Overlay on hover/loading */}
+                      <div className={`absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent transition-opacity duration-300 ${
+                        loadingProject === project.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                      }`} />
                       
                       {/* Category badge */}
                       <div className="absolute top-4 right-4 px-3 py-1 bg-slate-900/80 backdrop-blur-sm border border-orange-400/30">
@@ -185,10 +209,19 @@ export default function ProjectsSection() {
                         </span>
                       </div>
 
-                      {/* Launch overlay on hover */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <div className="bg-gradient-to-r from-orange-500/90 to-orange-600/90 backdrop-blur-sm px-6 py-3 border border-orange-400/30">
-                          <span className="text-white font-medium text-sm">View Project</span>
+                      {/* Loading/Launch overlay */}
+                      <div className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${
+                        loadingProject === project.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                      }`}>
+                        <div className="bg-gradient-to-r from-orange-500/90 to-orange-600/90 backdrop-blur-sm px-6 py-3 border border-orange-400/30 flex items-center space-x-3">
+                          {loadingProject === project.id ? (
+                            <>
+                              <Loader2 className="w-4 h-4 animate-spin text-white" />
+                              <span className="text-white font-medium text-sm">Loading...</span>
+                            </>
+                          ) : (
+                            <span className="text-white font-medium text-sm">View Project</span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -197,7 +230,9 @@ export default function ProjectsSection() {
                     <div className="p-6 lg:p-8 flex-grow flex flex-col">
                       {/* Title and Date */}
                       <div className="mb-4">
-                        <h3 className="text-xl lg:text-2xl font-semibold text-white mb-2 group-hover:text-orange-300 transition-colors duration-300">
+                        <h3 className={`text-xl lg:text-2xl font-semibold mb-2 transition-colors duration-300 ${
+                          loadingProject === project.id ? 'text-orange-300' : 'text-white group-hover:text-orange-300'
+                        }`}>
                           {project.title}
                         </h3>
                         <div className="flex items-center text-slate-400 text-sm">
@@ -218,15 +253,32 @@ export default function ProjectsSection() {
                         ))}
                       </div>
                       
-                      {/* Click indicator */}
+                      {/* Click indicator with loading state */}
                       <div className="flex items-center justify-between mt-auto">
-                        <span className="text-orange-400 text-sm group-hover:text-orange-300 transition-colors duration-300">
-                          Click to view project →
+                        <span className={`text-sm transition-colors duration-300 flex items-center space-x-2 ${
+                          loadingProject === project.id 
+                            ? 'text-orange-300' 
+                            : 'text-orange-400 group-hover:text-orange-300'
+                        }`}>
+                          {loadingProject === project.id ? (
+                            <>
+                              <Loader2 className="w-3 h-3 animate-spin" />
+                              <span>Loading project...</span>
+                            </>
+                          ) : (
+                            <span>Click to view project →</span>
+                          )}
                         </span>
                         <div className="flex space-x-1">
-                          <div className="w-2 h-2 bg-orange-400/60 rounded-full group-hover:bg-orange-400 transition-colors duration-300" />
-                          <div className="w-2 h-2 bg-orange-500/40 rounded-full group-hover:bg-orange-500 transition-colors duration-300" />
-                          <div className="w-2 h-2 bg-orange-600/30 rounded-full group-hover:bg-orange-600 transition-colors duration-300" />
+                          <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                            loadingProject === project.id ? 'bg-orange-400 animate-pulse' : 'bg-orange-400/60 group-hover:bg-orange-400'
+                          }`} />
+                          <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                            loadingProject === project.id ? 'bg-orange-500 animate-pulse' : 'bg-orange-500/40 group-hover:bg-orange-500'
+                          }`} />
+                          <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                            loadingProject === project.id ? 'bg-orange-600 animate-pulse' : 'bg-orange-600/30 group-hover:bg-orange-600'
+                          }`} />
                         </div>
                       </div>
                     </div>
