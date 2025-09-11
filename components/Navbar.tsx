@@ -48,7 +48,7 @@ export default function Navbar() {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
               >
-                <span className="relative bottom-0.5">
+                <span className="relative md:bottom-0.5">
                   Amrit Dubey
                   <div className="absolute -inset-2 bg-gradient-to-r from-orange-500/0 via-orange-400/20 to-orange-500/0 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300" />
                 </span>
