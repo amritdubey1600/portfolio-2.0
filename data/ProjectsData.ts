@@ -34,7 +34,7 @@ export const projects: Project[] = [
     date: "August 2025",
     description: "A Next.js and Firebase-powered movie booking platform that allows users to register, authenticate securely, and book movie tickets in real time. Designed with TypeScript and Zustand for strong typing and predictable state management.",
     image: "/projects/cinephile.png",
-    tags: [ "Next.js", "Typescript", "Firebase", "Zustand", "Tailwind", "REST APIs", "JWT" ],
+    tags: [ "Next.js", "Typescript", "Firebase", "Zustand", "Tailwind", "REST APIs", "Next-Auth" ],
     category: "web-app",
     github: "https://github.com/amritdubey1600/cinephile",
     webapp: "https://cinephile-sepia-six.vercel.app/",
