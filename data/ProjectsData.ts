@@ -13,19 +13,19 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: 'authenticator',
+    id: "authenticator",
     title: "Authenticator",
     date: "July 2025",
-    description: "A full-stack MERN application for secure user authentication and account management. It leverages JWT for robust session handling, Redux for centralized state management, and a responsive Tailwind-powered UI for seamless user experience.",
+    description: "A full-stack MERN access control application enabling secure authentication and role-based user management. Features JWT-based session handling, Redux-powered state management, and a responsive Tailwind UI for a seamless experience. Containerized with Docker for consistent deployment.",
     image: "/projects/authenticator.png",
-    tags: [ "React.js", "MongoDB", "Node.js", "Express.js", "Redux", "Tailwind", "REST APIs", "JWT" ],
+    tags: [ "React.js", "Redux", "Tailwind CSS", "MongoDB", "Node.js", "Express.js", "REST APIs", "JWT", "Docker"],
     category: "web-app",
     github: "https://github.com/amritdubey1600/admin-app",
     webapp: "https://admin-app-sypg.onrender.com/",
     highlights: [
-      ["Secure Authentication", "Implemented JWT-based login and signup system."],
-      ["Role-Based Access", "Ensured users have restricted and secure access control."],
-      ["State Management", "Used Redux for global state and authentication flow."],
+      ["Secure Authentication", "Implemented JWT-based login, signup, and session handling."],
+      ["Role-Based Access", "Managed permissions and dashboards based on user roles."],
+      ["Containerization", "Dockerized frontend and backend for efficient deployment."]
     ]
   },
   {
