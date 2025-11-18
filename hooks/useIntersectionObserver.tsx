@@ -8,7 +8,7 @@ export function useIntersectionObserver<T extends HTMLElement>(
   const [isIntersecting, setIntersecting] = useState(false);
 
   useEffect(() => {
-    const node = ref.current; // ✅ capture once
+    const node = ref.current; // capture once
 
     if (!node) return;
 
@@ -22,7 +22,7 @@ export function useIntersectionObserver<T extends HTMLElement>(
     observer.observe(node);
 
     return () => {
-      if (node) observer.unobserve(node); // ✅ use captured node
+      if (node) observer.unobserve(node); // use captured node
     };
   }, [options]);
 
